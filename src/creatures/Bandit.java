@@ -27,6 +27,11 @@ public class Bandit extends Creature {
         System.out.println("Бандит по имени " + this.getName() + " куда-то выстрелил");
     }
 
+    public void reload() {
+        gun.reload();
+        System.out.println("Бандит по имени " + this.getName() + " перезарядил пистолет");
+    }
+
     public void robTheBank(Bank bank, double forMoney) throws Exception {
         if (gun == null) {
             throw new NotAbleToRobTheBankException("Невозможно ограбить банк без пистолета");
@@ -65,5 +70,37 @@ public class Bandit extends Creature {
 
     public void setArrested(boolean arrested) {
         this.arrested = arrested;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bandit bandit = (Bandit) o;
+
+        if (Double.compare(bandit.money, money) != 0) return false;
+        if (arrested != bandit.arrested) return false;
+        return gun != null ? gun.equals(bandit.gun) : bandit.gun == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = gun != null ? gun.hashCode() : 0;
+        temp = Double.doubleToLongBits(money);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (arrested ? 1 : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Bandit{" +
+                "gun=" + gun +
+                ", money=" + money +
+                ", arrested=" + arrested +
+                '}';
     }
 }

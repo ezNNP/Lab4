@@ -33,4 +33,26 @@ public class Glock implements Gun {
     public void setAmmo(int ammo) {
         this.ammo = ammo;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Glock glock = (Glock) o;
+
+        return ammo == glock.ammo;
+    }
+
+    @Override
+    public int hashCode() {
+        return ammo;
+    }
+
+    @Override
+    public String toString() {
+        return "Glock{" +
+                "ammo=" + ammo +
+                '}';
+    }
 }

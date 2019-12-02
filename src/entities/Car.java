@@ -63,4 +63,37 @@ public class Car implements Drivable {
     public void setFuelPerDrive(double fuelPerDrive) {
         this.fuelPerDrive = fuelPerDrive;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Car car = (Car) o;
+
+        if (Double.compare(car.fuel, fuel) != 0) return false;
+        if (Double.compare(car.fuelPerDrive, fuelPerDrive) != 0) return false;
+        return creatures != null ? creatures.equals(car.creatures) : car.creatures == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = creatures != null ? creatures.hashCode() : 0;
+        temp = Double.doubleToLongBits(fuel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(fuelPerDrive);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "creatures=" + creatures +
+                ", fuel=" + fuel +
+                ", fuelPerDrive=" + fuelPerDrive +
+                '}';
+    }
 }
