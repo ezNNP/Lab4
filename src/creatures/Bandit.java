@@ -1,6 +1,7 @@
 package creatures;
 
 import entities.Bank;
+import entities.Car;
 import exceptions.NotAbleToRobTheBankException;
 import exceptions.NotEnoughMoneyException;
 import weapons.Gun;
@@ -46,6 +47,15 @@ public class Bandit extends Creature {
         money += forMoney;
         bank.setMoney(bank.getMoney() - forMoney);
         System.out.println("Банк успешно ограблен бандитом по имени " + this.getName());
+    }
+
+    public void hideTheMoney(Car car, double money) throws NotEnoughMoneyException {
+        if (money > this.money) {
+            throw new NotEnoughMoneyException("Недостаточно денег, чтобы спрятать их в машину");
+        }
+        car.setHiddenMoney(car.getHiddenMoney() + money);
+        this.money -= money;
+        System.out.println("Бандит по имени " + getName() + " спрятал " + money + " условных единиц в машине " + car.getName());
     }
 
     public Gun getGun() {

@@ -6,14 +6,27 @@ import exceptions.NotEnoughFuelException;
 import java.util.ArrayList;
 
 public class Car implements Drivable {
+    private String name;
     private ArrayList<Creature> creatures;
     private double fuel;
     private double fuelPerDrive;
+    private double hiddenMoney;
+    private boolean working;
 
-    public Car(ArrayList<Creature> creatures, double fuel, double fuelPerDrive) {
-        this.creatures = creatures;
+    public Car(String name, ArrayList<Creature> creatures, double fuel, double fuelPerDrive) {
+        this.name = name == null ? "Default" : name;
+        this.creatures = creatures == null ? new ArrayList<>() : creatures;
         this.fuel = fuel;
         this.fuelPerDrive = fuelPerDrive;
+        this.working = true;
+    }
+
+    public Car(String name, double fuel, double fuelPerDrive) {
+        this.name = name == null ? "Default" : name;
+        this.creatures = new ArrayList<>();
+        this.fuel = fuel;
+        this.fuelPerDrive = fuelPerDrive;
+        this.working = true;
     }
 
     public void kickOutOfCar(Creature creature) {
@@ -21,18 +34,36 @@ public class Car implements Drivable {
             if (c.equals(creature)) {
                 System.out.println("Из машины был выкинут кто-то по имени " + c.getName());
                 creatures.remove(c);
+                break;
             }
         }
+        System.out.println("Произошел обман, и никого в машине по имени " + creature.getName() + " обнаружено не было");
     }
 
     @Override
     public void drive() throws NotEnoughFuelException {
+        if (creatures.size() == 0) {
+            System.out.println("Некому вести машину, добавьте кого-нибудь");
+            return;
+        }
+        if (!working) {
+            System.out.println("Машина не работает");
+            return;
+        }
         fuel -= fuelPerDrive;
         if (fuel < 0) {
             fuel += fuelPerDrive;
             throw new NotEnoughFuelException("Недостаточное количество топлива");
         }
         System.out.println("Машина успешно проехала");
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ArrayList<Creature> getCreatures() {
@@ -64,6 +95,22 @@ public class Car implements Drivable {
         this.fuelPerDrive = fuelPerDrive;
     }
 
+    public double getHiddenMoney() {
+        return hiddenMoney;
+    }
+
+    public void setHiddenMoney(double hiddenMoney) {
+        this.hiddenMoney = hiddenMoney;
+    }
+
+    public boolean isWorking() {
+        return working;
+    }
+
+    public void setWorking(boolean working) {
+        this.working = working;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,27 +120,37 @@ public class Car implements Drivable {
 
         if (Double.compare(car.fuel, fuel) != 0) return false;
         if (Double.compare(car.fuelPerDrive, fuelPerDrive) != 0) return false;
-        return creatures != null ? creatures.equals(car.creatures) : car.creatures == null;
+        if (Double.compare(car.hiddenMoney, hiddenMoney) != 0) return false;
+        if (working != car.working) return false;
+        if (!name.equals(car.name)) return false;
+        return creatures.equals(car.creatures);
     }
 
     @Override
     public int hashCode() {
         int result;
         long temp;
-        result = creatures != null ? creatures.hashCode() : 0;
+        result = name.hashCode();
+        result = 31 * result + creatures.hashCode();
         temp = Double.doubleToLongBits(fuel);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(fuelPerDrive);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(hiddenMoney);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (working ? 1 : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Car{" +
-                "creatures=" + creatures +
+                "name='" + name + '\'' +
+                ", creatures=" + creatures +
                 ", fuel=" + fuel +
                 ", fuelPerDrive=" + fuelPerDrive +
+                ", hiddenMoney=" + hiddenMoney +
+                ", working=" + working +
                 '}';
     }
 }

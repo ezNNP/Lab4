@@ -44,6 +44,10 @@ public abstract class Creature implements Moveable {
         this.speed = speed;
     }
 
+    public void move() {
+        System.out.println("Кто-то с именем " + name + " куда-то идет");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

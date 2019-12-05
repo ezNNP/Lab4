@@ -23,6 +23,24 @@ public class Policeman extends Creature {
         }
     }
 
+    public void arrest(MicroChelik microChelik) {
+        if (this.getSpeed() > microChelik.getSpeed()) {
+            if (microChelik.isBold()) {
+                System.out.println("Полицейский по имени " + this.getName() + " задержал микрочелика по имени " + microChelik.getName() + " потому-что он лысый");
+            } else {
+                System.out.println("Полицейский по имени " + this.getName() + " не задержал микрочелика по имени " + microChelik.getName() + " потому-что он с волосами");
+            }
+        } else {
+            System.out.println("Полицейский по имени " + this.getName() + " не смог догнать микрочелика по имени " + microChelik.getName());
+        }
+    }
+
+    public void createFindings() {
+        System.out.println("1) " + this.getName() + " не смог найти чемодан");
+        System.out.println("2) " + this.getName() + " нашел одного дохлого кота");
+        System.out.println("3) " + this.getName() + " обрушил стену дома от того, что сместил почву");
+    }
+
     public enum PoliceRank {
         PRIVATE,
         SERGEANT,
