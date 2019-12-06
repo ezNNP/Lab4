@@ -1,9 +1,9 @@
 package creatures;
 
 public abstract class Creature implements Moveable {
-    private String name;
-    private double x, y;
-    private double speed;
+    protected String name;
+    protected double x, y;
+    protected double speed;
 
     public Creature(String name, double x, double y, double speed) {
         this.name = name;

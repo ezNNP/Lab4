@@ -20,17 +20,17 @@ public class Bandit extends Creature {
     }
 
     public void move() {
-        System.out.println("Бандит по имени " + this.getName() + " куда-то двигается");
+        System.out.println("Бандит по имени " + this.name + " куда-то двигается");
     }
 
     public void shoot() {
         gun.shoot();
-        System.out.println("Бандит по имени " + this.getName() + " куда-то выстрелил");
+        System.out.println("Бандит по имени " + this.name + " куда-то выстрелил");
     }
 
     public void reload() {
         gun.reload();
-        System.out.println("Бандит по имени " + this.getName() + " перезарядил пистолет");
+        System.out.println("Бандит по имени " + this.name + " перезарядил пистолет");
     }
 
     public void robTheBank(Bank bank, double forMoney) throws Exception {
@@ -46,7 +46,7 @@ public class Bandit extends Creature {
         gun.shoot();
         money += forMoney;
         bank.setMoney(bank.getMoney() - forMoney);
-        System.out.println("Банк успешно ограблен бандитом по имени " + this.getName());
+        System.out.println("Банк успешно ограблен бандитом по имени " + this.name);
     }
 
     public void hideTheMoney(Car car, double money) throws NotEnoughMoneyException {
@@ -55,7 +55,7 @@ public class Bandit extends Creature {
         }
         car.setHiddenMoney(car.getHiddenMoney() + money);
         this.money -= money;
-        System.out.println("Бандит по имени " + getName() + " спрятал " + money + " условных единиц в машине " + car.getName());
+        System.out.println("Бандит по имени " + name + " спрятал " + money + " условных единиц в машине " + car.getName());
     }
 
     public Gun getGun() {
@@ -86,6 +86,7 @@ public class Bandit extends Creature {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         Bandit bandit = (Bandit) o;
 
@@ -96,9 +97,9 @@ public class Bandit extends Creature {
 
     @Override
     public int hashCode() {
-        int result;
+        int result = super.hashCode();
         long temp;
-        result = gun != null ? gun.hashCode() : 0;
+        result = 31 * result + (gun != null ? gun.hashCode() : 0);
         temp = Double.doubleToLongBits(money);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (arrested ? 1 : 0);
@@ -111,6 +112,10 @@ public class Bandit extends Creature {
                 "gun=" + gun +
                 ", money=" + money +
                 ", arrested=" + arrested +
+                ", name='" + name + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", speed=" + speed +
                 '}';
     }
 }

@@ -11,34 +11,34 @@ public class Policeman extends Creature {
 
     @Override
     public void move() {
-        System.out.println("Полицейский по имени " + this.getName() + " куда то двигается");
+        System.out.println("Полицейский по имени " + this.name + " куда то двигается");
     }
 
     public void arrest(Bandit bandit) {
         if (this.getSpeed() > bandit.getSpeed()) {
             bandit.setArrested(true);
-            System.out.println("Полицейский по имени " + this.getName() + " задержал бандита по имени " + bandit.getName());
+            System.out.println("Полицейский по имени " + this.name + " задержал бандита по имени " + bandit.name);
         } else {
-            System.out.println("Полицейский по имени " + this.getName() + " не смог задержать бандита по имени " + bandit.getName());
+            System.out.println("Полицейский по имени " + this.name + " не смог задержать бандита по имени " + bandit.name);
         }
     }
 
     public void arrest(MicroChelik microChelik) {
         if (this.getSpeed() > microChelik.getSpeed()) {
             if (microChelik.isBold()) {
-                System.out.println("Полицейский по имени " + this.getName() + " задержал микрочелика по имени " + microChelik.getName() + " потому-что он лысый");
+                System.out.println("Полицейский по имени " + this.name + " задержал микрочелика по имени " + microChelik.name + " потому-что он лысый");
             } else {
-                System.out.println("Полицейский по имени " + this.getName() + " не задержал микрочелика по имени " + microChelik.getName() + " потому-что он с волосами");
+                System.out.println("Полицейский по имени " + this.name + " не задержал микрочелика по имени " + microChelik.name + " потому-что он с волосами");
             }
         } else {
-            System.out.println("Полицейский по имени " + this.getName() + " не смог догнать микрочелика по имени " + microChelik.getName());
+            System.out.println("Полицейский по имени " + this.name + " не смог догнать микрочелика по имени " + microChelik.name);
         }
     }
 
     public void createFindings() {
-        System.out.println("1) " + this.getName() + " не смог найти чемодан");
-        System.out.println("2) " + this.getName() + " нашел одного дохлого кота");
-        System.out.println("3) " + this.getName() + " обрушил стену дома от того, что сместил почву");
+        System.out.println("1) " + this.name + " не смог найти чемодан");
+        System.out.println("2) " + this.name + " нашел одного дохлого кота");
+        System.out.println("3) " + this.name + " обрушил стену дома от того, что сместил почву");
     }
 
     public enum PoliceRank {
@@ -81,6 +81,10 @@ public class Policeman extends Creature {
     public String toString() {
         return "Policeman{" +
                 "rank=" + rank +
+                ", name='" + name + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", speed=" + speed +
                 '}';
     }
 }

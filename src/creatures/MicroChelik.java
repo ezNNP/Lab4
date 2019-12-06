@@ -14,10 +14,10 @@ public class MicroChelik extends Creature {
     public void cutTheWheels(Car car) {
         if (car.getHiddenMoney() > 0) {
             car.setWorking(false);
-            System.out.println("Микрочелик по имени " + this.getName() + " проколол колеса машины и нашел машину с деньгами");
+            System.out.println("Микрочелик по имени " + this.name + " проколол колеса машины и нашел машину с деньгами");
         } else {
             car.setWorking(false);
-            System.out.println("Микрочелик по имени " + this.getName() + " проколол колеса машины и не нашел машину с деньгами");
+            System.out.println("Микрочелик по имени " + this.name + " проколол колеса машины и не нашел машину с деньгами");
         }
     }
 
@@ -51,6 +51,10 @@ public class MicroChelik extends Creature {
     public String toString() {
         return "MicroChelik{" +
                 "bold=" + bold +
+                ", name='" + name + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", speed=" + speed +
                 '}';
     }
 }
