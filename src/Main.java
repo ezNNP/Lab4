@@ -1,4 +1,5 @@
 import creatures.Bandit;
+import creatures.CyberBandit;
 import creatures.MicroChelik;
 import creatures.Policeman;
 import entities.Bank;
@@ -6,8 +7,11 @@ import entities.Car;
 import weapons.Glock;
 import weapons.Gun;
 
+import java.lang.reflect.Field;
+import java.util.Vector;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IllegalAccessException, NoSuchFieldException {
         Bank sberbank = new Bank("Сбербанк", Double.MAX_VALUE);
         Bank tinkoff = new Bank("Тинькофф", 100000);
         Gun glock = new Glock();
@@ -86,5 +90,24 @@ public class Main {
         policeman2.arrest(chelik2);
         policeman3.arrest(chelik3);
         policeman4.arrest(chelik4);
+
+        Bank bankReflection = new Bank("Bank", 100);
+        CyberBandit cyberBandit = new CyberBandit("CyberBandit", 0, 0, 100, null, 10);
+
+        Field f = ClassLoader.class.getDeclaredField("classes");
+        f.setAccessible(true);
+
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        Vector<Class> classes =  (Vector<Class>) f.get(classLoader);
+        for (Class clazz : classes) {
+            Class superClass = clazz.getSuperclass();
+            if (superClass != null) {
+                if (superClass.getSuperclass() != null) {
+                    System.out.println("For " + clazz.getSimpleName() + " parent of parent is " + superClass.getSuperclass().getSimpleName());
+                } else {
+                    System.out.println("For " + clazz.getSimpleName() + " parent is " + superClass.getSimpleName());
+                }
+            }
+        }
     }
 }

@@ -8,9 +8,9 @@ import weapons.Gun;
 
 public class Bandit extends Creature {
 
-    private Gun gun; // DI
-    private double money;
-    private boolean arrested;
+    protected Gun gun; // DI
+    protected double money;
+    protected boolean arrested;
 
     public Bandit(String name, double x, double y, double speed, Gun gun, double money) {
         super(name, x, y, speed);
